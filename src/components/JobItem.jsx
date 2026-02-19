@@ -10,13 +10,11 @@ function JobItem({ job, candidate }) {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    // Validación: campo vacío
     if (!repoUrl.trim()) {
       setError("Please enter your GitHub repository URL.");
       return;
     }
-
-    // Validación: URL de GitHub
+    
     if (!repoUrl.includes("github.com")) {
       setError("Please enter a valid GitHub URL (must contain 'github.com')");
       return;
@@ -38,7 +36,7 @@ function JobItem({ job, candidate }) {
             uuid: candidate.uuid,
             jobId: job.id,
             candidateId: candidate.candidateId,
-            applicationId: candidate.applicationId, // requerido por la API
+            applicationId: candidate.applicationId,
             repoUrl: repoUrl.trim(),
           }),
         }
@@ -47,21 +45,19 @@ function JobItem({ job, candidate }) {
       const data = await response.json();
 
       if (response.ok && data.ok === true) {
-        setMessage("Application sent successfully ✅");
-        setRepoUrl(""); // Limpiar el input después del éxito
+        setMessage("Application sent successfully OK");
+        setRepoUrl(""); 
       } else {
-        // Manejo mejorado de errores con más información
         const errorMessage = 
           data?.error || 
           data?.message || 
           response.statusText ||
           "Application failed. Please check your data";
-        setError(`Application failed: ${errorMessage} ❌`);
+        setError(`Application failed: ${errorMessage} ERROR`);
       }
     } catch (err) {
-      // Manejo de errores de red con más detalle
       setError(
-        `Network error: ${err.message || "Please check your connection and try again"} ❌`
+        `Network error: ${err.message || "Please check your connection and try again"} ERROR`
       );
     } finally {
       setLoading(false);
