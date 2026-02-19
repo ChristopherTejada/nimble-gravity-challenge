@@ -15,14 +15,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch candidate
         const candidateRes = await fetch(
           `${BASE_URL}/api/candidate/get-by-email?email=${CANDIDATE_EMAIL}`
         );
         const candidateData = await candidateRes.json();
         setCandidate(candidateData);
 
-        // Fetch jobs
         const jobsRes = await fetch(`${BASE_URL}/api/jobs/get-list`);
         const jobsData = await jobsRes.json();
         setJobs(jobsData);
